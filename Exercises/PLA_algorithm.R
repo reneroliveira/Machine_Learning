@@ -35,6 +35,7 @@ PLA = function(data,d=2,w0=c(0,0,0)){
   y_pred = classify(w %*% x)
   missed = which(y_true != y_pred)
   
+  iterations = 1
   while(length(missed)!=0){
     i <- sample(missed,1)
     
@@ -43,16 +44,19 @@ PLA = function(data,d=2,w0=c(0,0,0)){
     }
     y_pred <- classify(w %*% x)
     missed <- which(y_true != y_pred)
-    
+    iterations <- iterations + 1
   }
-  return (w)
+  return (list(w,iterations))
   
 }
 t0 = Sys.time()
-w = PLA(data)
+result = PLA(data)
 delta_t=Sys.time()-t0
 
+w = result[[1]]
+it = result[[2]]
 print(paste0("Execution Time: ",delta_t," ",attr(delta_t,"units")))
+print(paste0("Iterations: ",it))
 print(paste0("Real Angular Coefficient -> ",a))
 print(paste0("PLA Angular Coefficient -> ",-w[2]/w[3]))
 print(paste0("Real Linear Coefficient -> ",b))
