@@ -92,14 +92,14 @@
 		Such monotone property is already proved in the previous item. Because, if $y(t)=1$, by (b) we have $\bw^{T}(t+1)\bx(t)>\bw^{T}(t)x(t)$.
 		
 		In the case where $y(t)=-1$, and $\sign(\bx^{T}(t)\bx(t))=1$ (misclassified), we would want $\bw^{T}(t+1)\bx(t)$ to be a strictly decreasing funtion of $t$, which by (b) is true, since $y(t)=-1$ implies $\bw^{T}(t+1)\bx(t)<\bw^{T}(t)x(t)$
-		
+	\end{enumerate}
 		\textbf{Exercise 1.4:}
 		
 		Let  us  create  our  own  target  function  $f$   and  data  set $\mathcal{D}$  and  see  how  the perceptron  learning  algorithm  works.  Take $d = 2$ so  you  can  visualize  the problem,  and  choose  a  random  line  in  the  plane  as  your  target  function, where one side of the  line  maps to $+1$  and  the other  maps to $—1$,  Choose the  inputs $\bx_n$  of the data  set  as  random  points  in  the  plane,  and  evaluate the target  function  on  each $\bx_n$ to get the corresponding output $y_n$.
 		
 		 Now, generate a  data  set of size 20.  Try the perceptron  learning algorithmon  your  data  set  and  see  how  long  it  takes  to  converge  and  how  well  thefinal  hypothesis $g$  matches your target  $f$.  
 		 
-		 \subitem \textit{Solution:} 
+		 \textit{Solution:} 
 		 \begin{figure}[!htb]
 		 	\centering
 		 	\label{pla}
@@ -118,9 +118,43 @@
  [1] "PLA Linear Coefficient -> -0.548887922667682"
 		 \end{lstlisting}
 		 
+		 \textbf{Exercise 1.8:}
 		 
-	\end{enumerate}
+		 If $\mu=0.9$, what is the probability that a sample of $10$ marbles will have $\nu\leq 0.1$? [\emph{Hints: 1. Use binomial distribution. 2. The answer is a very small number}]
+		 
+		 \textit{Solution: } The context is a bin that contains red and green marbles, with $\mu$ being the unknown probability of randomly picking a red marble. $\nu$ is the proportion of red marbles in a sample with replacement.
+		 
+		 If $X_i$ is the random indicator variable for the $i$-th marble being red, $X_1,X_2,...,X_10$ are independent and indentically distribuited with a bernoulli($\mu$) distribution.
+		 
+		 The sum $S=\sum_{i=1}^{10}X_i$ is a $\operatorname{bibomial}(10,\mu)$ variable. We want to compute $\mathbb{P}(S/10\leq 0.1)=\mathbb{P}(S\leq 1)$ which is:
+		 
+		 \begin{align*}
+		 &\displaystyle\sum_{i=0}^{1}{10 \choose i}\mu^i(1-\mu)^{n-i}\\
+		 &=\mu^0(1-\mu)^{10}+45\mu(1-\mu)^9\\
+		 &=(0.1)^{10}+45(0.9)(0.1)^9\\
+		 &=10^{-10}(1+405)\\
+		 &=4.06\times 10^{-8}
+		 \end{align*}
+		 
+		 A very small number for sure!
+		 
+	\textbf{Exercise 1.9:}
 	
+	If $\mu=0.9$, use Hoeffding Inequality to bound the probability that a sample of 10 marbles will have $\nu\leq 0.1$ and compare the answer to the previous exercise.
+	
+	\textit{Solution:} 
+	
+	The \textit{Hoeffding Inequality}\cite{yaser2012learning} states that, for any sample size $N$,
+	
+	$$\mathbb{P}[|\nu-\mu|>\varepsilon]\leq2 e^{-2\varepsilon^2N},~~~\forall~\varepsilon>0$$
+	
+	In our case, $N=10$. and we want to bound the probability of the proportion of red marbles $\nu$ is less than $0.1$; therefore, we want no know the probability of the distante $|\nu-\mu|$ exceeds $0.8$, then we just set $\varepsilon=0.8$ and apply the formula:
+	
+	\begin{align*}
+		\mathbb{P}[|\nu-\mu|>0.8]\leq 2 e^{-20(0.8)^2}=2e^{-12.8}\approx 5.521 \times 10^{-6}
+	\end{align*}
+	
+	Comparing this bound with the exact probability found in the last exercise, we can see that Hoeffding's bound is around 135 times the real answer. Besides that, it is still a tiny number, making it clear that observing a 0.1 proportion (or less than that) of red marbles in a 10-marbles sample of a bin with $\mu=0.9$ is very unlikely. 
 \newpage
 
 % \addcontentsline{toc}{section}{Referências}
