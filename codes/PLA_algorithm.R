@@ -73,7 +73,7 @@ line2_y=a2*line2_x+b2
 pos = which(data[,3]==1)
 neg = which(data[,3]==-1)
 
-png("figs/ex1.4_PLA.png")
+png("../figs/ex1.4_PLA.png")
 plot(x1[pos],x2[pos],xlim=c(x_min,x_max),ylim=c(y_min,y_max),col="blue",xlab="",ylab="")
 par(new=TRUE)
 plot(x1[neg],x2[neg],xlim=c(x_min,x_max),ylim=c(y_min,y_max),xlab="x1",ylab="x2")
