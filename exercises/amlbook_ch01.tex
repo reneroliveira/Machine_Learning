@@ -126,14 +126,14 @@
 		 
 		 If $X_i$ is the random indicator variable for the $i$-th marble being red, $X_1,X_2,...,X_10$ are independent and indentically distribuited with a bernoulli($\mu$) distribution.
 		 
-		 The sum $S=\sum_{i=1}^{10}X_i$ is a $\operatorname{bibomial}(10,\mu)$ variable. We want to compute $\mathbb{P}(S/10\leq 0.1)=\mathbb{P}(S\leq 1)$ which is:
+		 The sum $S=\sum_{i=1}^{10}X_i$ is a $\operatorname{binomial}(10,\mu)$ variable. We want to compute $\mathbb{P}(S/10\leq 0.1)=\mathbb{P}(S\leq 1)$ which is:
 		 
 		 \begin{align*}
 		 &\displaystyle\sum_{i=0}^{1}{10 \choose i}\mu^i(1-\mu)^{n-i}\\
-		 &=\mu^0(1-\mu)^{10}+45\mu(1-\mu)^9\\
-		 &=(0.1)^{10}+45(0.9)(0.1)^9\\
-		 &=10^{-10}(1+405)\\
-		 &=4.06\times 10^{-8}
+		 &=\mu^0(1-\mu)^{10}+10\mu(1-\mu)^9\\
+		 &=(0.1)^{10}+10(0.9)(0.1)^9\\
+		 &=10^{-9}(10^{-1}+9)\\
+		 &=9.1\times 10^{-9}
 		 \end{align*}
 		 
 		 A very small number for sure!
@@ -154,7 +154,7 @@
 		\mathbb{P}[|\nu-\mu|>0.8]\leq 2 e^{-20(0.8)^2}=2e^{-12.8}\approx 5.521 \times 10^{-6}
 	\end{align*}
 	
-	Comparing this bound with the exact probability found in the last exercise, we can see that Hoeffding's bound is around 135 times the real answer. Besides that, it is still a tiny number, making it clear that observing a 0.1 proportion (or less than that) of red marbles in a 10-marbles sample of a bin with $\mu=0.9$ is very unlikely. 
+	Comparing this bound with the exact probability found in the last exercise, we can see that Hoeffding's bound is around 606 times the real answer. Besides that, it is still a tiny number, making it clear that observing a 0.1 proportion (or less than that) of red marbles in a 10-marbles sample of a bin with $\mu=0.9$ is very unlikely. 
 \newpage
 
 % \addcontentsline{toc}{section}{Referências}
