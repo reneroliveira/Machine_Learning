@@ -19,21 +19,33 @@ simple_linear_model <- function(data,predictor,target,level=.95){
   
   sx2 <- sum((x-x_bar)**2)
   
-  b1_left <- beta1-qt((1+level)/2,df=n-2)*RSE*sx2**(-1/2)
-  b1_right <- beta1+qt((1+level)/2,df=n-2)*RSE*sx2**(-1/2)
+  SE_b1 <- RSE*sx2**(-1/2)
+  SE_b0 <- RSE*sqrt(1/n+(x_bar**2)/sx2)
+  b1_left <- beta1 - qt((1+level)/2,df=n-2)*SE_b1
+  b1_right <- beta1 + qt((1+level)/2,df=n-2)*SE_b1
   
-  b0_left <- beta0 - qt((1+level)/2,df=n-2)*RSE*sqrt(1/n+(x_bar**2)/sx2)
-  b0_right <- beta0 + qt((1+level)/2,df=n-2)*RSE*sqrt(1/n+(x_bar**2)/sx2)
+  b0_left <- beta0 - qt((1+level)/2,df=n-2)*SE_b0
+  b0_right <- beta0 + qt((1+level)/2,df=n-2)*SE_b0
   
   confidence <- matrix(c(b0_left,b1_left,b0_right,b1_right),nrow=2)
   row.names(confidence) <- c("Intercept",predictor)
   colnames(confidence) <- paste0(100*c((1-level)/2,(1+level)/2),"%")
-  return(list("Intercept"=beta0,
-              predictor=beta1,
+  
+  # Coefficients
+  t0 <- beta0/SE_b0
+  t1 <- beta1/SE_b1
+  coefs <- matrix(c(beta0,beta1,
+                    SE_b0,SE_b1,
+                    t0,t1,
+                    1-pt(abs(t0),df=n-2),
+                    1-pt(abs(t1),df=n-2)),nrow=2,4)
+  row.names(coefs) <- c("(Intercept)",predictor)
+  colnames(coefs) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
+  return(list(coefs=coefs,
               confidence = confidence))
 }
 
-print(simple_linear_model(Advertising,"TV","Sales"))
+simple_linear_model(Advertising,"TV","Sales")
 
 
 
